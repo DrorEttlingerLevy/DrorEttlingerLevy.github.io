@@ -1,0 +1,12 @@
+from youtube_transcript_api import YouTubeTranscriptApi
+
+# Replace with your YouTube video ID
+video_id = "0UO5SZkK-KA"
+
+# Fetch the transcript
+transcript = YouTubeTranscriptApi.get_transcript(video_id)
+
+# Write to a text file
+with open("transcript.txt", "w") as f:
+    for entry in transcript:
+        f.write(f"{entry['start']} - {entry['text']}\n")
