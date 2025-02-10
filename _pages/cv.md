@@ -11,54 +11,21 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+* M.Sc. in **Predictive Hydrogeological Numerical Modeling**, Weizmann Institute of Science,  under the supervision of [Prof. Brian Berkowitz](https://www.weizmann.ac.il/EPS/Brian/), 2022
+* B.Sc. in **Soil and Water Sciences**, the Hebrew University, 2020
 
 Work experience
 ======
-* Spring 2024: Academic Pages Collaborator
-  * GitHub University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+## 2024-2025 - Data Analyst, [Prospera Technologies](https://prospera.ag/about-us)  
 
-* Fall 2015: Research Assistant
-  * GitHub University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+[Prospera](https://prospera.ag/about-us) is a computer vision company that leverages data science and machine learning to optimize crop production, enabling growers to make informed, efficient decisions and improve yields with fewer resources.
 
-* Summer 2015: Research Assistant
-  * GitHub University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
-  
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+- Utilized Python and SQL for data analysis
+- Conducted data analysis to improve machine learning models
 
-Publications
-======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Talks
-======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
-  {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+## 2023-2024 - Hydrogeologist, [Adama](https://www.adam-ma.co.il/en/home/)  
+
+[Adama](https://www.adama.com/) is an environmental consulting company specializing in large-scale projects in areas such as air pollution, contaminated soils, hydrogeology, and sustainable development.
+
+- Applied GIS and remote sensing for environmental data analysis  
+- Led environmental projects with data-driven insights
