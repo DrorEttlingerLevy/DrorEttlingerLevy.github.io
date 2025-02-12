@@ -9,6 +9,11 @@ This includes handling missing values, scaling, and encoding both numerical and 
 The process involves using `Pipeline`, `ColumnTransformer`, and even custom transformers for feature engineering ⚙️
 With `make_pipeline`, preprocessing and model training are combined seamlessly, optimizing performance using **`n_jobs=-1`** and **`remainder="passthrough"`**. Finally, saving and loading pipelines ensures reusability for future projects 💾🚀
 
+{% highlight python %}
+def hello():
+    print("Hello, Stack Overflow-style code blocks!")
+{% endhighlight %}
+
 So, we did the ordinary first steps:
 1. load data
 2. head, info, value_counts, describe, hist
