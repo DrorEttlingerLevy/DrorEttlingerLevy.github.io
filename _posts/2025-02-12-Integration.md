@@ -5,6 +5,10 @@ permalink: /posts/2025/02/Integration/
 ---
 In many real-world problems, we need to approximate integrals because finding an exact solution is too complex or even impossible. Methods like `Newton-Cotes` (Closed and Open) and `Gauss Quadrature` help us solve these integrals efficiently. 
 
+<div class="note">
+    <strong>Note:</strong> The weights of 1, 4, 1 are determined by Lagrange basis polynomials. The weight for a quadratic polynomial gives more emphasis to the midpoint.
+</div>
+
 
 Like all numeric methods, we are trying to do some "tricks" and approcimations to still manage to solve complex or unknown function. for this time we'll focues on Newton-Cotes and Gauss-quadrature for Integration and Interpolation.
 
@@ -13,7 +17,7 @@ Like all numeric methods, we are trying to do some "tricks" and approcimations t
 Lets say for a real world exapmle - we want to calculte the pollution spread in a river and to estimat the total pollution load in a river over a given section.
 to talk about the sum over time or over space is takeing us to use integrals. 
 
-for smlisicy lets use the mass transported where $C(x)$ is the pollution concentraion at location $x$ and $V(x)$ is the flow velocity.
+for smlisicy lets use the mass transported where $C(x)$  is the pollution concentraion at location $x$ and $V(x)$ is the flow velocity.
 
 Now, $C(x)$ and $V(x)$ are measured at discrete locations, that is to say we do not have the whole domain meathed at all locastion (which would be not efficent this to do)
 
