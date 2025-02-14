@@ -5,21 +5,20 @@ permalink: /posts/2025/02/Integration/
 ---
 In many real-world problems, we need to approximate integrals because finding an exact solution is too complex or even impossible. Methods like `Newton-Cotes` (Closed and Open) and `Gauss Quadrature` help us solve these integrals efficiently. 
 
+Like all numeric methods, we’re trying to use some tricks and approximations to still manage to solve complex or unknown functions. This time, we’ll focus on Newton-Cotes and Gauss quadrature for integration and interpolation.
+
+# The Need for Numerical Integration
+---  
+Let's say, for a real-world example, we want to calculate the pollution spread in a river and estimate the total pollution load over a given section. Talking about the sum over time or space naturally leads us to use integrals.  
+
+For simplicity, let's consider the mass transported, where $C(x)$ is the pollution concentration at location $x$, and $V(x)$ is the flow velocity.  
+
+Now, $C(x)$ and $V(x)$ are measured at discrete locations, meaning we don’t have data for the entire domain at every point (which would be inefficient to measure). That’s where numerical methods come in to help approximate the integral based on the available data.  
+
 <div class="note">
-    <strong>Note:</strong> The weights of 1, 4, 1 are determined by Lagrange basis polynomials. The weight for a quadratic polynomial gives more emphasis to the midpoint.
+    <strong>Note:</strong> In real-world scenarios, sensors measure pollution concentration and velocity at specific locations. These data points are then used in numerical integration methods to estimate the total pollution load over a section of the river.
 </div>
 
-
-Like all numeric methods, we are trying to do some "tricks" and approcimations to still manage to solve complex or unknown function. for this time we'll focues on Newton-Cotes and Gauss-quadrature for Integration and Interpolation.
-
-# Why do we need those methods? 
----
-Lets say for a real world exapmle - we want to calculte the pollution spread in a river and to estimat the total pollution load in a river over a given section.
-to talk about the sum over time or over space is takeing us to use integrals. 
-
-for smlisicy lets use the mass transported where $C(x)$  is the pollution concentraion at location $x$ and $V(x)$ is the flow velocity.
-
-Now, $C(x)$ and $V(x)$ are measured at discrete locations, that is to say we do not have the whole domain meathed at all locastion (which would be not efficent this to do)
 
 our integral would be: 
 $$M = \int_0^L C(x) V(x) \,dx$$
