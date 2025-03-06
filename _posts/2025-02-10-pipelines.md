@@ -87,6 +87,20 @@ class OutletTypeEncoder(BaseEstimator, TransformerMixin):
 where:
 - `BaseEstimator`: Ensures the transformer follows Scikit-Learn’s API (allows hyperparameter tuning, cloning, etc.).
 - `TransformerMixin`: Provides `fit_transform()` automatically if `fit()` and `transform()` are defined.
+
+<div class="note">
+    <strong>Note:</strong> It's is better and more flexible to use Pipelines and not make_pipeline (as shown below)
+</div>
+
+*`fit()`* --> learn the parameters needed to transform, for example the std and mean of a feature.
+*`transform()`* --> actually transform the data (the train data), uses the std and the mean calculated before, on all the points of the feature.
+*`fit_transfrom()`* --> do both fit (learning) and transform at the same time
+
+<div class="note">
+    <strong>Note:</strong> we'll *NOT* fit the test, because it will learn it's 
+</div>
+
+
 ## Source: Youtube - Building a Machine Learning Pipeline with Python and Scikit-Learn | Step-by-Step Tutorial 🖥️
 
 [Building a Machine Learning Pipeline with Python and Scikit-Learn \| Step-by-Step Tutorial - YouTube](https://www.youtube.com/watch?v=T9ETsSD1I0w&t=20s&ab_channel=Ryan%26MattDataScience)
