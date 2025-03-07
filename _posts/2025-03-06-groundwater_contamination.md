@@ -5,10 +5,7 @@ permalink: /posts/2025/02/groundwater_contamination/
 ---
 
 Update from today – 10 months have passed and the groundwater contamination crisis, not very far from where I live, remains out of control.
-
-This was caused by a wastewater treatment facility that collapsed, putting our groundwater at risk and potentially contaminating the Shikma reservoir, which channels floodwaters into the coastal aquifer we all depend on.
-
-I'm worried that as time passes, environmental remediation will become more challenging. How can we know the extent of pollution in our groundwater reservoir? 🌍
+This was caused by a wastewater treatment facility that collapsed, putting our groundwater at risk and potentially contaminating the Shikma reservoir, which channels floodwaters into the coastal aquifer we all depend on. I'm worried that as time passes, environmental remediation will become more challenging. How can we know the extent of pollution in our groundwater reservoir? 🌍
 
 Just last year in northern Tel Aviv, my hydrogeology team and I drilled boreholes to install piezometers for groundwater monitoring.
 
@@ -18,4 +15,8 @@ That's why I conducted laboratory flow cell experiments and compared those resul
 
 The video shows our team drilling boreholes to install piezometers. I've learned that connecting theory with actual hydrogeological conditions requires this combination of hands-on fieldwork and analytical modeling to truly understand groundwater systems. ⛏️
 
-![Video Thumbnail](/images/WhatsApp_Vide_2025-02-28.mp4)
+<video controls width="600">
+  <source src="{{ site.baseurl }}/images/WhatsApp1.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+

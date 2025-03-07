@@ -16,16 +16,18 @@ Education
 
 Work experience
 ======
-## 2024-2025 - Data Analyst, [Prospera Technologies](https://prospera.ag/about-us)  
+## 2024-2025 - Data Analyst, [Prospera Technologies](https://prospera.ag/about-us), a [Valmont company](https://www.valmont.com/)
 
-[Prospera](https://prospera.ag/about-us) is a computer vision company that leverages data science and machine learning to optimize crop production, enabling growers to make informed, efficient decisions and improve yields with fewer resources.
+Propspera is a computer vision company that leverages data science and machine learning to optimize crop production, enabling growers to make informed, efficient decisions and improve yields with fewer resources.
 
-- Utilized Python and SQL for data analysis
-- Conducted data analysis to improve machine learning models
+- Utilized Python (SQLite, Pandas,NumPy and Matplotlib) and SQL (PostgreSQL) for data analysis to improve machine learning models.
+- Managed an annotation team of 23 annotators from India, providing expertise in agronomic content and guiding the diagnosis of crop plant diseases
 
-## 2023-2024 - Hydrogeologist, [Adama](https://www.adam-ma.co.il/en/home/)  
+## 2023-2024 - Hydrogeologist, Environmental consultant [Adama](https://www.adam-ma.co.il/en/home/)  
 
 [Adama](https://www.adama.com/) is an environmental consulting company specializing in large-scale projects in areas such as air pollution, contaminated soils, hydrogeology, and sustainable development.
 
-- Applied GIS and remote sensing for environmental data analysis  
+- Applied GIS (QGIS) and remote sensing for environmental data analysis  
+- Conducted groundwater evaluations and field sampling for soil and water quality assessments
 - Led environmental projects with data-driven insights
+

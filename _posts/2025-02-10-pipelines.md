@@ -1,5 +1,5 @@
 ---
-title: 'How Did I Learned Pipelines for DS Projects'
+title: 'Pipelines for DS Projects'
 date: 2025-02-10
 permalink: /posts/2025/02/pipelines/
 ---
@@ -62,8 +62,68 @@ And finally fit_transform
 transform_train_set = preprocessor.fit_transform(train_set)
 ```
 
+![My helpful screenshot](/images/030725.jpg)
+
+```python
+top_10_important_features = list(coefs.abs().sort_values(by='Coefficients', ascending=False).iloc[:10].index)
+```
+Now we'll integrate the feature selection into the pipeline 
+
+```python 
+from sklearn.feature_selection import SelectFromModel
+
+ridgeCV=RidgeCV()
+ridgecv_pipeline = Pipeline([
+    ("preprocessor", preprocessor),
+    ("feature_selection", SelectFromModel(ridgeCV, prefit=False, threshold='median')),
+    ("model", ridgeCV)
+])
+ridgecv_pipeline.fit(X_train, y_train)
+y_pred_ridgecv = ridgecv_pipeline.predict(X_test)
+
+# to get the selected features names
+feature_names = ridgecv_pipeline.named_steps["preprocessor"].get_feature_names_out()
+# Get the feature selection step
+feature_selector = ridgecv_pipeline.named_steps["feature_selection"]
+
+# Get the mask of selected features (True for selected features, False for non-selected)
+selected_features_mask = feature_selector.get_support()
+
+# Get the names of selected features
+selected_feature_names = feature_names[selected_features_mask]
+```
+
 ![My helpful screenshot](/images/WhatsApp_Image_2025-02-10.jpg)
 
+
+## Pipeline for Selecting Features [inria.github.io](https://inria.github.io/scikit-learn-mooc/python_scripts/dev_features_importance.html)
+
+In linear models, the target value is modeled as a linear combination of the features.
+Coefficients represent the relationship between the given feature $Xi$
+ and the target $yi$
+, assuming that all the other features remain constant (conditional dependence). This is different from plotting $Xi$
+ versus $yi$
+ and fitting a linear relationship: in that case all possible values of the other features are taken into account in the estimation (marginal dependence).
+
+```python
+# Extract trained RidgeCV model
+ridge_model = ridgecv_pipeline.named_steps["model"]
+# Get the feature names after preprocessing
+feature_names = ridgecv_pipeline.named_steps["preprocessor"].get_feature_names_out()
+# Get coefficients and ensure they match feature names
+coefs = pd.DataFrame(
+    ridge_model.coef_.reshape(-1, 1), columns=["Coefficients"], index=feature_names
+)
+
+# Plot
+coefs.plot(kind="barh", figsize=(9, 7))
+plt.title("Ridge model Coefficients")
+plt.axvline(x=0, color=".5")
+plt.subplots_adjust(left=0.3)
+plt.show()
+```
+
+* The scale is from -1500 to 2000 because it matches the target feature (price), but it is already scaled in the pipeline so the importance of the features stays the same.
 
 and a brief from the book Hands On Machine Learning:
 ![My helpful screenshot](/images/1739196533941.jpg)
@@ -162,4 +222,18 @@ pipeline = joblib.load('pipe.joblib')
 
 ![My helpful screenshot](/images/1739200574343.jpg)
 
+We can also add to the pipeline a grid search CV for the preprocessing itself
 
+```python
+pipeline = Pipeline([
+    ('preprocessing', StandardScaler()),  # This could be swapped with other scalers
+    ('model', RandomForestRegressor())
+])
+
+param_grid = {
+    'preprocessing': [StandardScaler(), MinMaxScaler(), RobustScaler()],
+    'model__n_estimators': [50, 100, 200]
+}
+
+grid_search = GridSearchCV(pipeline, param_grid, cv=5)
+```
