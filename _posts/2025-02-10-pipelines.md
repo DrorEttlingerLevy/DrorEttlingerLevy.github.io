@@ -62,7 +62,7 @@ And finally fit_transform
 transform_train_set = preprocessor.fit_transform(train_set)
 ```
 
-![My helpful screenshot](/images/030725.jpg)
+![My helpful screenshot](/images/070325.jpg)
 
 ```python
 top_10_important_features = list(coefs.abs().sort_values(by='Coefficients', ascending=False).iloc[:10].index)
@@ -236,4 +236,145 @@ param_grid = {
 }
 
 grid_search = GridSearchCV(pipeline, param_grid, cv=5)
+ic(grid_search.cv_results)
+```
+To conclude all, a full titanic project using pipelines:
+
+```python
+import time
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+import pandas as pd
+from icecream import ic
+from sklearn.datasets import fetch_openml
+from sklearn.decomposition import PCA
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import SGDClassifier
+from sklearn.manifold import TSNE
+from sklearn.metrics import (
+    accuracy_score,
+    auc,
+    classification_report,
+    confusion_matrix,
+    f1_score,
+    precision_recall_curve,
+    precision_score,
+    recall_score,
+    roc_curve,
+)
+from sklearn.model_selection import (
+    GridSearchCV,
+    cross_val_predict,
+    cross_val_score,
+    train_test_split,
+)
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, label_binarize,OneHotEncoder
+import seaborn as sns
+from sklearn.impute import SimpleImputer
+from sklearn.compose import ColumnTransformer
+
+#import the train data
+df = pd.read_csv(r'titanic\train.csv')
+
+y = df['Survived']
+X = df.drop('Survived', axis=1)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42)
+
+
+cat = X_train.select_dtypes(include="object").columns.tolist()
+num = list(X_train.drop(columns=cat).columns)
+
+drop_col = ['Cabin', 'Ticket']
+
+
+num_pipeline = Pipeline([('imputer', SimpleImputer(strategy='median')),
+                     ('scaler',StandardScaler())
+                    ])
+
+cat_pipeline = Pipeline([('encoder', OneHotEncoder(handle_unknown='ignore'))
+])
+
+preprocessor = ColumnTransformer([
+  ('drop_col', 'drop', drop_col),
+  ('num', num_pipeline, num),
+  ('cat', cat_pipeline, cat)
+])
+
+model_pipeline = Pipeline([
+  ('preprocessor', preprocessor),
+  ('model', RandomForestClassifier(random_state=42))
+])
+
+param_grid = {
+    'model__n_estimators': [50, 100],
+    'model__max_depth': [None, 5],
+    'model__min_samples_split': [2, 5]
+}
+
+grid_search = GridSearchCV(model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1)
+grid_search.fit(X_train, y_train)
+
+print("Best params:", grid_search.best_params_)
+print("Best score:", grid_search.best_score_)
+
+for mean, std, params in zip(
+    grid_search.cv_results_["mean_test_score"],
+    grid_search.cv_results_["std_test_score"],
+    grid_search.cv_results_["params"]
+):
+    print(f"{mean:.3f} ± {std:.3f} -> {params}")
+
+# we will use the best model
+
+y_test_pred = grid_search.best_estimator_.predict(X_test)
+
+## after trusting my model
+def evaluate_model(X_train, y_train, X_test, y_test, grid_search):
+    grid_search.fit(X_train, y_train)
+
+    y_test_pred = grid_search.predict(X_test)
+
+    cm = ic(confusion_matrix(y_test, y_test_pred))
+    ic(precision_score(y_test, y_test_pred))
+    ic(recall_score(y_test, y_test_pred))
+    ic(f1_score(y_test, y_test_pred))
+
+    plt.matshow(cm, cmap=plt.cm.gray)
+    plt.title("Confusion Matrix")
+    plt.colorbar()
+    plt.show()
+
+    y_scores = grid_search.predict_proba(X_test)[:, 1]
+
+    prec, rec, thresh = precision_recall_curve(y_test, y_scores)
+    prec = prec[:-1]
+    rec = rec[:-1]
+
+    plt.plot(thresh, prec, label="Precision")
+    plt.plot(thresh, rec, label="Recall")
+    plt.xlabel("Threshold")
+    plt.ylabel("Score")
+    plt.title("Precision and Recall vs Threshold")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+    fpr, tpr, _ = roc_curve(y_test, y_scores)
+    roc_auc = auc(fpr, tpr)
+    plt.plot(fpr, tpr, label=f"AUC = {roc_auc:.2f}")
+    plt.plot([0, 1], [0, 1], 'k--')
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.title("ROC Curve")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+evaluate_model(X_train, y_train, X_test, y_test, grid_search.best_estimator_)
 ```
