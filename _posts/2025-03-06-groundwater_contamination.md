@@ -5,6 +5,10 @@ permalink: /posts/2025/02/groundwater_contamination/
 image: /images/blog/blog060325.jpg
 preview: >
   10 months have passed and the groundwater crisis remains unresolved. Floodwaters risk contaminating our aquifer, and time is running out for effective remediation.
+header:
+  teaser: /blog/blog060325.jpg
+
+
 ---
 
 Update from today – 10 months have passed and the groundwater contamination crisis, not very far from where I live, remains out of control.
