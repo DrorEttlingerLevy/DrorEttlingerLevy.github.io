@@ -34,4 +34,4 @@ Hydrogeologist, Environmental Consultant [Adama](https://www.adam-ma.co.il/en/ho
 
 
 ![My helpful screenshot](/images/cover-image.jpg)
-*Sorrento, Italy*
+*Sorrento, Italy.*
