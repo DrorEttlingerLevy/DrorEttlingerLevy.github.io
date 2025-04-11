@@ -12,31 +12,36 @@
   {% assign title = post.title %}
 {% endif %}
 
-<div class="{{ include.type | default: "list" }}__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-    {% if include.type == "grid" and teaser %}
-      <div class="archive__item-teaser">
-        <img src=
-          {% if teaser contains "://" %}
-            "{{ teaser }}"
-          {% else %}
-            "{{ teaser | prepend: "/images/" | prepend: base_path }}"
-          {% endif %}
-          alt="">
-      </div>
-    {% endif %}
-    <h2 class="archive__item-title" itemprop="headline">
-      {% if post.link %}
-        <a href="{{ post.link }}">{{ title }}</a> <a href="{{ base_path }}{{ post.url }}" rel="permalink"><i class="fa fa-link" aria-hidden="true" title="permalink"></i><span class="sr-only">Permalink</span></a>
-      {% else %}
-        <a href="{{ base_path }}{{ post.url }}" rel="permalink">{{ title }}</a>
-      {% endif %}
+<div class="{{ include.type | default: "list" }}__item" style="display: flex; gap: 1.5rem; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid #ddd; margin-bottom: 1.5rem;">
+  {% if post.image %}
+    <div style="flex-shrink: 0; width: 250px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+      <img src="{{ post.image }}" alt="Talk image" style="width: 100%; height: auto; display: block;">
+    </div>
+  {% endif %}
+
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork" style="flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 0.25rem;">
+    <h2 class="archive__item-title" itemprop="headline" style="margin: 0;">
+      <a href="{{ base_path }}{{ post.url }}" rel="permalink">{{ title }}</a>
     </h2>
-    {% if post.read_time %}
-      <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {% include read-time.html %}</p>
+
+    {% if post.date %}
+      <p class="page__date" style="margin: 0;">
+        <strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Date:</strong>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+      </p>
     {% endif %}
-    {% if post.date %}<p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {{ post.date | date: '%B %d, %Y' }}</p>{% endif %}
-    {% if post.venue %}<p class="archive__item-excerpt" itemprop="description">{{post.type}}, {{ post.venue }},  {{post.location}} {% endif %}
-    {% if post.excerpt %}<p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify }}</p>{% endif %}
+
+    {% if post.venue or post.location %}
+      <p style="margin: 0;">
+        {% if post.venue %}<strong>Venue:</strong> {{ post.venue }}<br>{% endif %}
+        {% if post.location %}<strong>Location:</strong> {{ post.location }}{% endif %}
+      </p>
+    {% endif %}
+
+    {% if post.preview %}
+      <p class="archive__item-excerpt" itemprop="description" style="margin: 0; max-height: 4.5em; overflow: hidden; text-overflow: ellipsis;">{{ post.preview | markdownify }}</p>
+    {% elsif post.excerpt %}
+      <p class="archive__item-excerpt" itemprop="description" style="margin: 0; max-height: 4.5em; overflow: hidden; text-overflow: ellipsis;">{{ post.excerpt | markdownify }}</p>
+    {% endif %}
   </article>
 </div>

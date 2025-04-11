@@ -9,9 +9,11 @@ redirect_from:
 
 {% include base_path %}
 
+I’m currently a PhD student at the Technion, under the supervision of [Prof. Barak Fishbein](https://fishbain.net.technion.ac.il/) in the Faculty of Civil and Environmental Engineering. My research focuses on marine environmental monitoring, using signal processing, ML algorithms, and CNNs to reduce pollution caused by aquaculture.
+
 Education
 ======
-* M.Sc. in **Predictive Hydrogeological Numerical Modeling, 2-D Finite Elements **, Weizmann Institute of Science, Department of Earth and Planetary Sciences,  under the supervision of [Prof. Brian Berkowitz](https://www.weizmann.ac.il/EPS/Brian/), 2022
+* M.Sc. in **Hydrogeological Numerical Modeling, 2-D Finite Elements**, Weizmann Institute of Science, Department of Earth and Planetary Sciences,  under the supervision of [Prof. Brian Berkowitz](https://www.weizmann.ac.il/EPS/Brian/), 2022
 * B.Sc. in **Soil and Water Sciences**, Faculty of Agriculture, the Hebrew University, 2020
 
 Work experience
