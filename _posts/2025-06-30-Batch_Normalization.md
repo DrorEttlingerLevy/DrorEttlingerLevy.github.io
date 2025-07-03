@@ -1,88 +1,109 @@
 ---
-title: 'Batch Normalization - Deep Dive'
+title: 'Batch Normalization in Deep Learning - Stabilization, Scaling, and Undoing'
 date: 2025-06-30
 permalink: /posts/2025/06/Batch_normalization/
 image: /images/blog/30062025_1.png
 preview: >
-  Batch Normalization speeds up training and stabilizes deep networks by normalizing layer outputs, not just inputs. It's can also be canceled by some mathematical tricks.
+  Batch Normalization speeds up training and stabilizes deep networks by normalizing layer outputs, not just inputs. It can also be canceled by some mathematical tricks.
 header:
   teaser: /blog/30062025_1.png
 ---
 
-## Intro
-Normalization is collapsing the input to be between 0 and 1, unlike standardization that makes the mean 0 and the variance 1.  
-It is hard for the NN (and for other ML algorithms) to learn the weights of the input features if they are in other scales.  
+**Batch Normalization** helps neural networks train *faster* and *more stable* by normalizing the outputs of each layer — not just the inputs.
 
-Problem - unstable gradient problem
+<div class="note">
+  <strong>Note:</strong> Batch normalization is applied during training and adjusts outputs using learned parameters to maintain expressive power.
+</div>
 
-Solution - instead of only normalizing our inputs and then feeding the data into our NN, we normalize all the outputs of all the layers in our network.  
-![My helpful screenshot](/images/blog/30062025.png)
+## ❓ Why Normalize?
 
-from: [Batch normalization What it is and how to implement it](https://www.youtube.com/watch?v=yXOMHOpbon8&ab_channel=AssemblyAI)  
+‘Normalization’ means squeezing values into a range like `[0, 1]`, and ‘standardization’ makes the data have mean `0` and standard deviation `1`.
 
-This decreases the importance of the initial weights and the learning rate is faster and thus the training will be faster (even though we do extra calculation for the normalization each batch).  
+When features are in different scales, the model **struggles to learn** — gradients can explode or vanish.
 
-from: [Batch Normalization - EXPLAINED!](https://www.youtube.com/watch?v=DtEq44FTPM4&ab_channel=CodeEmporium)
+<div class="info">
+  <strong>Important:</strong> Batch norm doesn’t just apply to inputs. It’s applied across **each layer’s activations**, and it's done for every mini-batch.
+</div>
 
-## Q: Why do we scale and shift (equation 2) the activations after normalizing them? 
+So instead of normalizing once, we normalize *throughout the network*, layer-by-layer.
 
-The normalization itself is no enough and we need to also scale and shift the activations because the NN learns how it is best to normalize the activations based on the task and the data and according to what it learns. Normalizing alone forces outputs to zero mean and unit variance, which can restrict learning. By using the parameters for scale and shift, the network can recover the original distribution if needed, or learn a new optimal one.
+![Layer Normalization Example](/images/blog/30062025.png)
 
-## Q: Since 𝛾𝑖 and 𝛽𝑖 are parameters of the model, they can change during training. What values can these parameters take which will UNDO the Batch Normalization operation?
+**Source:**  
+[AssemblyAI – What it is and how to implement it](https://www.youtube.com/watch?v=yXOMHOpbon8&ab_channel=AssemblyAI)  
+[CodeEmporium – EXPLAINED!](https://www.youtube.com/watch?v=DtEq44FTPM4&ab_channel=CodeEmporium)
 
-* I used ChatGPT to understand all the math, and wrote it in my steps of understanding
+---
 
-Let combine the equations (1) and (2) together:
+## 🔍 Why Scale and Shift After Normalization?
+
+Just normalizing forces the outputs to have `mean = 0` and `std = 1`, which can limit the network’s flexibility.
+
+So instead, we **add two trainable parameters**, `γᵢ` (scale) and `βᵢ` (shift), so the network can learn how much to adjust the normalization.
+
+<div class="note">
+  <strong>Note:</strong> These two values allow the model to undo the normalization if needed — or learn a new better one for the task.
+</div>
+
+---
+
+## 🔄 Undoing Batch Normalization?
+
+Let’s say we want to go back to the original `xᵢ`, like batch norm didn’t happen.
+
+The full expression is:
+
 $$
 \hat{h}_i = \gamma_i \cdot \frac{x_i - \mu}{\sqrt{\sigma^2 + \varepsilon}} + \beta_i
 $$
 
-if we want to undo the batch normalization that means that  $\hat{h}_i = x_i$ like no normalization happened.
+To cancel batch norm, we want:
 
-so:
+$$
+\hat{h}_i = x_i
+$$
+
+So:
+
 $$
 x_i = \gamma_i \cdot \frac{x_i - \mu}{\sqrt{\sigma^2 + \varepsilon}} + \beta_i
 $$
-$$
-x_i \sqrt{\sigma^2 + \varepsilon} = \gamma_i(x_i - \mu) + \beta_i \sqrt{\sigma^2 + \varepsilon}
-$$
 
-If we want this to be true for all $x_i$ we need the coefficients to match on both sides.
-
-On the right side it is 
-$$
-\sqrt{\sigma^2 + \varepsilon} * x_i
-$$
-
-and on the left side it is only 
-$$
-\gamma_i * x_i
-$$
-
-So to match we need:
-$$
-\gamma_i = \sqrt{\sigma^2 + \varepsilon}
-$$
-
-Now we need the coefficient of the $ \beta $ to be = 0, so:
+Multiply both sides:
 
 $$
-\beta_i - \frac{\gamma_i \mu}{\sqrt{\sigma^2 + \varepsilon}} = 0 \quad \Rightarrow \quad \beta_i = \frac{\gamma_i \mu}{\sqrt{\sigma^2 + \varepsilon}}
+x_i \cdot \sqrt{\sigma^2 + \varepsilon} = \gamma_i(x_i - \mu) + \beta_i \cdot \sqrt{\sigma^2 + \varepsilon}
 $$
 
-Now  $\gamma_i $
-$$
-\beta_i = \frac{\sqrt{\sigma^2 + \varepsilon} \cdot \mu}{\sqrt{\sigma^2 + \varepsilon}} = \mu
-$$
+Now match the coefficients:
 
-Finally:
-Substituting back:
 $$
-\hat{h}_i = \sqrt{\sigma^2 + \varepsilon} \cdot \frac{x_i - \mu}{\sqrt{\sigma^2 + \varepsilon}} + \mu = x_i
+\gamma_i = \sqrt{\sigma^2 + \varepsilon}, \quad \beta_i = \mu
 $$
 
-To summarize: To undo batch normalization, set $\gamma_i = \sqrt{\sigma^2 + \varepsilon}$ and $\beta_i = \mu$, which makes $\hat{h}_i = x_i$ ,matching coefficients on both sides of the equation so that no normalization effectively occurs.
+Substitute:
 
-## Q: Write a computational graph for the Batch Normalization layer.
+$$
+\hat{h}_i = x_i
+$$
 
-![My helpful screenshot](/images/blog/30062025_1.png)
+<div class="info">
+  <strong>Key Insight:</strong> You can fully cancel Batch Norm by setting <code>γᵢ = √(σ² + ε)</code> and <code>βᵢ = μ</code>.
+</div>
+
+---
+
+## 🧮 Batch Norm Computational Graph
+
+Here’s how the operations flow inside a BN layer:
+
+![Computational Graph](/images/blog/30062025_1.png)
+
+First, we calculate `μ` and `σ²` for the current batch. Then normalize `xᵢ`, and apply the learned `γ` and `β`.
+
+During inference, we don’t use the batch stats anymore — instead, we use **running averages** collected during training.
+
+---
+
+**In summary**, Batch Normalization makes training more efficient, smoother, and often gives better generalization.  
+But what’s nice is that it’s still flexible — the network can learn to apply it fully, partially, or *not at all* depending on the task.

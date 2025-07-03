@@ -75,8 +75,12 @@ where:
 
 These models are too complex for simple analytical solutions. **Newton-Cotes (Simpson’s Rule) and Gauss-Quadrature** provide efficient numerical methods for solving these integrals over real-world river systems.
 
->[!info]
->Note this method is for 1D, but assuming the main flowing is downsteam we could still benifit from it.
+
+<div class="note">
+    <strong>Note:</strong> Note this method is for 1D, but assuming the main flowing is downstream we could still benefit from it.
+</div>
+
+
 # How to use Newton-Cotes method - closed and open
 
 Now that we convinsed it would be more afficent to use nomeric methods for this kind of problem, let see how we do it.
@@ -115,11 +119,14 @@ where:
 - $x_2 = b$ (end point),
 - $h = \frac{b - a}{2}$ (step size).
 
-> [!Note]
-> those wights of 1, 4, 1 are determent by Lagrange basis polynomials e.g. the wieghts for quadratic polynomial is given more wight to the midpoint because it gives more information abut the domin.
+<div class="note">
+    <strong>Note:</strong> those wights of 1, 4, 1 are determent by Lagrange basis polynomials e.g. the weights for quadratic polynomial is given more wight to the midpoint because it gives more information abut the domain.
+</div>
 
-> [!important]
-> the Polynomial degree is depends on the number of points and **not** by the function it self. what is to say it is better if we have n+1 points, but is we do not we can still apply the method but to expext higher error
+<div class="info">
+    <strong>Important:</strong> the Polynomial degree is depends on the number of points and **not** by the function it self. what is to say it is better if we have n+1 points, but is we do not we can still apply the method but to expext higher error
+</div>
+
 
 # **Derivation of Simpson’s Rule Error Term**
 To quantify the error, we use **Taylor series expansion** of $f(x)$ around the midpoint $x1$:
@@ -143,9 +150,9 @@ where $c$ is some unknown point in $(a, b)$, so we use the max option to find th
 
 
 # Lets go back to our river problem
-Again, assuming we only solving for 1D, now it can be that we can't get measurmennt is the exact start and end point, maybe because of trubulent or some other issues like rocks, vegetations and so on.
+Again, assuming we only solving for 1D, now it can be that we can't get measurement is the exact start and end point, maybe because of turbulent or some other issues like rocks, vegetation and so on.
 
-this means we nned to ignore the start and end points snd use only the interior points.
+this means we need to ignore the start and end points snd use only the interior points.
 
 now that we understand the problem, let's solve it
 
