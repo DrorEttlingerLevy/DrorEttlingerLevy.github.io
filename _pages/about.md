@@ -27,7 +27,7 @@ I am passionate about, using these technologies to protect the environment. 🌱
 - **B.Sc.** in **Soil and Water Sciences**, [Faculty of agriculture](https://en.hafakulta.agri.huji.ac.il/),  from the [Hebrew University.](https://en.huji.ac.il/)
 
 ### Work Experience 
-Data Analyst at [Prospera Technologies](https://prospera.ag/about-us), a [Valmont company](https://www.valmont.com/), computer vision company for precises agriculture.  
+Data Analyst at Prospera Technologies, a [Valmont company](https://www.valmont.com/), computer vision company for precises agriculture.  
 
 Hydrogeologist, Environmental Consultant [Adama](https://www.adam-ma.co.il/en/home/).  
 
