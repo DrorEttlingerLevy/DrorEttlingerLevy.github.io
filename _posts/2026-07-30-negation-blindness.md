@@ -2,7 +2,7 @@
 title: "I Tried to Save $0.40 on API Tokens, and My Local AI Gaslit Me"
 date: 2026-06-03
 permalink: /posts/2026/06/negation-blindness/
-image: /images/blog/negation-blindness.jpeg
+image: /images/blog/olama.png
 preview: >
   A local Ollama model completely reversed the meaning of a sentence,
   turning "an important file" into "not important at all." That mistake
