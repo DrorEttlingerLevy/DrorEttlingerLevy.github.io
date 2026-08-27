@@ -1,7 +1,7 @@
 ---
 title: "How Do Fish Sound? Our Research Featured on Ynet"
 collection: publications
-category: media
+category: manuscripts
 permalink: /publication/2026-01-14-ynet-fish-acoustics
 excerpt: "Our research on using underwater acoustics, signal processing, and AI to monitor fish feeding behavior was featured by Ynet, highlighting its potential for real-time precision aquaculture."
 date: 2026-01-14
